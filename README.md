@@ -1,1 +1,1 @@
-# auomata-sencillo
+# automata-sencillo
