@@ -57,7 +57,7 @@ y = (4 + x1) * 3
 
 Este es el autómata diseñado para el analizador léxico. Representa gráficamente cómo se reconocen los distintos tokens:
 
-![Autómata Léxico](./imagen/automata.png)
+![Autómata Léxico](https://github.com/nahomi2004/automata-sencillo/blob/main/imagen/automata.png?raw=true)
 
 ---
 
