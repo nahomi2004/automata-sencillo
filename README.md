@@ -56,6 +56,7 @@ y = (4 + x1) * 3
 ## 📊 3. Autómata Gráfico
 
 Este es el autómata diseñado para el analizador léxico. Representa gráficamente cómo se reconocen los distintos tokens:
+
 ![Autómata Léxico](./imagen/automata.png)
 
 ---
