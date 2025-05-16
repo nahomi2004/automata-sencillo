@@ -1,0 +1,125 @@
+Mi lenguaje Cereza (Lexico)
+
+----------------ASIGNACIONES------------------------------
+Las líneas de código finalizan con salto de línea. No se requiere un delimitador como ;. Si se incluye un ;, se ignorará y se mostrará una advertencia indicando que no es necesario.
+E igual que en python la jerarquia esta dada por tabuladores, sin embargo, si se lee un ; al final de la linea de codigo se la descarta, y solo se da una advertencia y aviso de que no es necesario.
+Cuando hay funciones como condicionales o ciclos, en caso de no haber tabulacion que muestre que hay lineas dentro de deben usar las llaves {}
+En caso de no usar ni llaves ni tabulaciones, se marca error.
+Los espacios no deberian ser un error, al menos que sea un numero negativo (siempre debe ir -n) o que se use la palabra var (no puede ser varvariable, siempre debe ir un espacio var variable). En caso de que haya separacion en operadores logicos, relacionales (solo aquellos que tienen =), incrementales, pues se pondra una advertencia o aviso de que no es lo mas correcto separarlos.
+
+para variables se va a usar la palabra calve var y luego =.
+var = variable
+las variables siempre deben iniciar con una letra (mayuscula o minuscula) y luego puede ir o no mas letras (mayus o minus) y numeros
+puede tener _ y/o - pero estos no pueden ir al principio ni al final, solo en medio 
+
+lo que es la asignacion:
+* los valores numericos enteros pueden estar conformados solo por numeros (0 al 9), cuando se ponga un - antes de un numero se entendera que es negativo, siempre y cuando el menos este pegado al numero asi -9 si esta - 9 no se lo leera como numero y marcara un error
+* los valores string se reconoceran cuando esten dentro de "" o ''
+* los valores booleanes se reconocen cuando se use la palabra true o false
+* los valores decimales deben tener la siguiente forma numero/s(0 al 9).numero/s(0 al 9), e igual cuando se ponga un - antes se reconocera como negativo, siempre y cuando el menos este pegado al numero asi -9 si esta - 9 no se lo leera como decimal y marcara error
+* Arrays, como es un lenguaje chiquito, pues seria mucho trabajo, asi que las listas estarian conformadas de la siguiente forma:
+var lista = {item1, item2, item3, ..., itemN}
+los items deben ser del mismo tipo, no hay mezclas
+
+operadores
+aritmeticos
+suma +
+resta -
+multiplicacion *
+division /
+modulo %
+
+relacionales
+Igual a ==
+diferente de !=, si es =! si se lo reconoce
+mayor que >
+menor que <
+mayor o igual que >=, si es => no se lo reconocen
+menor o igual que <=, si es <= no se lo reconoce
+
+operadores logicos
+&& o & es and
+|| o | es or
+
+operadores incrementales
+++ incrementa en 1
+-- incrementa en 2
+=+ o += se suma y se asigna, por ejemplo var x =+ 6, al valor que antes tenia x se le suma 6 y se guarda en x.
+=- o -= se resta y se asigna, lo mismo de antes pero se resta
+=/ o /= se divide y se asigna
+=* o *= se multiplica y se asigna
+
+ciclos y condicionales
+funcionan con las palbras de siempre
+los condicionales van a estar dados por
+
+if (condicion) {
+    lineas de codigo
+}
+else {
+    lineas de codigo
+}
+elseif (condicion) {
+    lineas de codigo
+}
+
+while {
+
+}
+
+do {
+
+} while (condicion)
+
+for (condicion) {
+
+}
+
+o tambien tab* significa tabulacion
+
+if (condicion) 
+tab*linea de codigo
+
+elseif (condicion)
+tab*linea de codigo
+
+y asi sucesivamente con cada ciclo o condicional.
+
+Las condiciones en if, while, do while deben tener la siguiente estructura
+<variable><operador relacional><variable>
+en caso de querer poner mas condiciones
+<variable><operador relacional><variable><operador logico><variable><operador relacional><variable>
+
+en el for cambia la cosa, a ver, puedes usar la estructura basica
+
+var i==(valor numerico), i<operador relacional><valor numerico>, i(operador incremental solo ++ o --)
+
+o tambien se puede usar el for que se usa en python, recuerda lo de tab* o {}
+
+for (variable) in (lista a recorrer)
+
+puntos adicionales: Lectura y escritura 
+
+las variables no pueden llamarse como las palabras reservadas:
+var if
+var var
+var while
+... etc 
+
+En caso de que pase esto, se presenta error.
+
+Y como comentar en el lenguaje, de la siguiente forma:
+# comentario una linea
+// comentario una linea
+
+'''
+bloque de comentario
+'''
+/*
+bloque de comentario
+*/
+
+Como siempre, las lineas comentadas no seran tomadas en cuenta.
+En caso de que los bloques de codigo no esten bien estruturados, se muestra error:
+SIEMPRE DEBEN TENER INICIO Y FINAL
+
