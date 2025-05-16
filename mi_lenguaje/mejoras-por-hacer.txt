@@ -1,0 +1,39 @@
+errores: 
+    varedad no deberia ser identificado
+    var
+    edad
+    tampoco deberia ser aceptado
+
+    solo puede ser var edad =
+    o var edad=
+
+    por alguna razon me sale ❌ Línea 16: Carácter inesperado '''
+    cuando claramente estaba cerrando el bloque de comentario
+    y aparte no me detecta que es un bloque de comentario porque asi lo sigue leyendo y hasta valida si hay un var dentro o no
+    falta validar que las var no pueden tener un nombre con espacio deberia dar error en caso de detectar var edad doctor = 2
+    y no deberia dar error en caso de var edaddoctor = 2
+
+    cuando encuentre un error en una linea de codigo debe dejar de leer esa linea, por ejemplo:
+    var edad@doctor
+    debe salir un solo error como Línea 8: Carácter inesperado '@'
+    y ya no debe salir ✅ Línea 8: Token válido → IDENTIFIER: doctor
+    esto de aqui deberia ser un error: var = 4 porque siempre despues de var debe haber minimo una letra
+
+    esto de aqui igual debe ser un error:
+    var n = 4 .9
+
+    No debe salir esto
+    ✅ Línea 8: Token válido → NUMBER_INT: 4
+    ❌ Línea 8: Carácter inesperado '.'
+    ✅ Línea 8: Token válido → NUMBER_INT: 9
+    
+    Deberia salir ❌ Línea 8: Decimal mal definido
+
+    esto no deberia estar permitido
+    var s = s porque como estaba en la especificacion los valores string deberia ir siempre o entre "" o ''
+
+    Otro error identificado es que no puedes utilizar operadores relacionales cuando asignas un valor a una variable, ademas de que las condiciones no pueden ir
+    fuera de (), las condiciones siempre se usan entre ()
+    Ademas otro error, es esto (c == i dice que esta bien, pero siempre se deben cerrar los parentesis y demas signos de agrupacion.
+
+Pero a este punto no se si todo esto son errores lexicos o ya son errores de sintaxis o semanticos. 

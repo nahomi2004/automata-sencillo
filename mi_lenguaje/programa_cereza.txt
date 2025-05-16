@@ -1,0 +1,12 @@
+var edad = 25
+if (edad >= 18)
+    var estado = "adulto"
+
+var
+edad
+
+var c >= false
+
+if (c == i) {
+    
+}
