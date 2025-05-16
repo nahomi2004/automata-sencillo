@@ -36,4 +36,6 @@ errores:
     fuera de (), las condiciones siempre se usan entre ()
     Ademas otro error, es esto (c == i dice que esta bien, pero siempre se deben cerrar los parentesis y demas signos de agrupacion.
 
+    los nombres de las variables aceptan este tipo de forma -a cuando claramente los nombres de las variables deberian ser a-b o a_b o 3a, asi
+
 Pero a este punto no se si todo esto son errores lexicos o ya son errores de sintaxis o semanticos. 
