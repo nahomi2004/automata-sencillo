@@ -1,3 +1,52 @@
-var edad = 25
+Declaración de variables
+var edad = 20
+var nombre = "nahomi"
+var bool = true
+var lista = {1, 2, 3, 4} 
+var decimal = 3.2
+var int-negativo = -8
+var decimal-negativo = -9.6
+
+# Apertura/Cierre
+var apertura = "Los signos de apertura y cierre utilizados () y {}"
+
+// Condicionales 
+
 if (edad >= 18)
     var estado = "adulto"
+else if (edad == 16) 
+    var estado = "Ya te falta poco para los 18"
+else 
+    var estado = "Eres un niño"
+
+if (edad >= 18) {
+    var estado = "adulto"
+}
+else if (edad == 16) { 
+    var estado = "Ya te falta poco para los 18"
+} else { 
+    var estado = "Eres un niño"
+}
+
+# Ciclos Repetitivos
+
+var edad = 0
+
+while (edad >= 18) {
+    edad++
+}
+
+do {
+    edad--
+} while (edad == 0)
+
+for (var i=0 i=<18 i++) {
+    var ninio = "uwu"
+}
+
+for (s) in (lista) {
+    var x = s
+}
+
+/*Comentario*/
+'''Comentario'''
