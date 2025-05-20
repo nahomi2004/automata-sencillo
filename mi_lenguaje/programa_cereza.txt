@@ -4,7 +4,8 @@ var edad = 20
 var nombre = "nahomi"
 var bool = true
 var lista = {1, 2, 3, 4} 
-var decimal = 3.2
+var 
+decimal = 3.2
 var int-negativo = -8
 var decimal-negativo = -9.6
 
@@ -41,13 +42,17 @@ do {
     edad--
 } while (edad == 0)
 
-for (var i=0 i=<18 i++) {
+for (var i=0; i<=18; i++) {
     var ninio = "uwu"
 }
 
 for (s) in (lista) {
-    var x = s
+    var x = "s"
 }
 
-/*Comentario*/
-'''Comentario'''
+/*
+Comentario
+*/
+'''
+Comentario
+'''

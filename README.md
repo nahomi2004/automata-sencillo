@@ -46,7 +46,7 @@ var 9inicio    ❌
 | Decimal     | Dígitos con punto | `3.14`, `-0.5`        |
 | Cadena      | Entre comillas simples o dobles | `"hola"`, `'texto'` |
 | Booleano    | `true` o `false` | `true`               |
-| Lista       | Entre llaves, homogénea | `{1, 2, 3}`, `{"a", "b"}` |
+| Lista       | Entre llaves, homogénea | `{1; 2; 3}`, `{"a"; "b"}` |
 
 ---
 
