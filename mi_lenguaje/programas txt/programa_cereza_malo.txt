@@ -1,0 +1,37 @@
+# Variables inválidas (Prueba pasada, solo lee var)
+var 9edad = 20                # empieza con número
+var _nombre = "Ana"           # empieza con _
+var -valor = -8               # empieza con -
+var nombre completo = "Ana"   # contiene espacio
+var = 4                       # falta identificador
+
+# Asignaciones (Paso la prueba solo la primera, la segunda lo detecto como valido)
+var edad == 20      # relacional en vez de asignación
+var edad >= 20      # operador no permitido
+
+# Numeros invalidos (Prueba no pasada, No detecto ningun error)
+var x = 3 .5         # espacio entre número y decimal
+var y = .5           # decimal sin parte entera
+var z = 3.           # decimal sin parte decimal
+
+# Cadenas de texto invalidas (Prueba no pasada, al valor de saludo, que esta sin comillas, lo ignoro por completo, no dio error, ni advertencia, ni nada. En cambio al valor de texto, lo detecto como un string)
+var saludo = hola          # sin comillas
+var texto = "hola          # comilla sin cerrar
+
+# Comentarios invalidos (Es raro, porque al no identificar el signo de apertura y cierre empieza a leer al / y al * como operadores aritmeticos, y a loq eu sigue como identifier. En cambio con el ''' lee las dos primeras comillas '' y a la tercera la marca como caracter inesperado, pero igual sigue leyendo el contenido como Identifier)
+/* Comentario sin cerrar
+'''
+Comentario mal cerrado
+
+# Ciclos y condicionales invalidos (al condicional lo leyo como si estuviera bien, no deberia. En el primer for, marca a los ; como no necesarios, creo que lo lee como que si se estuviera terminando la linea, y al ultimo for, igual lo marca como valido, no deberia)
+if edad > 18             # sin paréntesis
+for (i=0; i<=5; i++)      # usa ; en lugar de ,
+for i in lista            # sin paréntesis
+
+# Operadores mal usados (A ambos operadores los lee como operadores de asignacion)
+var edad =< 20     # debería ser <=
+var edad => 20     # inválido
+
+# Errores generales (Aqui tampoco marca error)
+var x = @2         # @ es símbolo no reconocido
+var y = 2#3        # mezcla de número y símbolo

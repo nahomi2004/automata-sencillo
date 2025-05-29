@@ -161,7 +161,6 @@ O múltiples:
 | Forma       | Tipo        |
 |-------------|-------------|
 | `# texto`   | Una línea   |
-| `// texto`  | Una línea   |
 | `''' texto '''` | Multilínea |
 | `/* texto */`   | Multilínea |
 

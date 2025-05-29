@@ -52,5 +52,5 @@ def analizar_archivo(nombre_archivo):
 
 # === Ejecutar ===
 if __name__ == "__main__":
-    archivo_fuente = "programa_cereza.txt"
+    archivo_fuente = "..\programas\programa_cereza.txt"
     analizar_archivo(archivo_fuente)

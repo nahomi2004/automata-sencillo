@@ -1,3 +1,5 @@
+Mejoras por hacer en la Version 1
+
 errores: 
     varedad no deberia ser identificado
     var
@@ -39,3 +41,31 @@ errores:
     los nombres de las variables aceptan este tipo de forma -a cuando claramente los nombres de las variables deberian ser a-b o a_b o 3a, asi
 
 Pero a este punto no se si todo esto son errores lexicos o ya son errores de sintaxis o semanticos. 
+
+Mejoras por hacer en la Version 2
+Variables inválidas
+    Reconoce mal nombres que empiezan con número, guion, etc.
+
+Asignaciones con ==, =>
+    No está diferenciando bien entre = y operadores relacionales
+
+Números mal formados
+    No detecta .5, 3 .5, 3. como inválidos
+
+Cadenas sin comillas
+    Ignora tokens como hola sin error
+
+Comentarios sin cerrar
+    Detecta símbolos como / y * por separado
+
+Condicionales sin ()
+    No valida estructura del if
+
+for con ;
+    Los ; son tratados como delimitadores (solo advertencia)
+
+Operadores =< y =>
+    Son tratados como = + < o >
+
+Caracteres inválidos (@)
+    No lo detecta bien si va después de =

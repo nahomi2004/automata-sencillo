@@ -1,5 +1,5 @@
 # GitHub https://github.com/nahomi2004/automata-sencillo/tree/main
-// Declaración de variables
+# Declaración de variables
 var edad = 20
 var nombre = "nahomi"
 var bool = true
@@ -42,7 +42,7 @@ do {
     edad--
 } while (edad == 0)
 
-for (var i=0; i<=18; i++) {
+for (var i=0, i<=18, i++) {
     var ninio = "uwu"
 }
 
