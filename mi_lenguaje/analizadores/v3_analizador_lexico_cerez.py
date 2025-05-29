@@ -81,7 +81,7 @@ def analizar_linea_v5(linea, num_linea):
             i += 1
             continue
 
-        if encontrado_var and not esperando_asignacion:
+        if not encontrado_var and not esperando_asignacion and not esperando_valor:
             if tipo != "IDENTIFIER":
                 print(f"❌ Línea {num_linea}: Después de 'var' se esperaba un nombre de variable válido.")
                 break
@@ -107,31 +107,123 @@ def analizar_linea_v5(linea, num_linea):
         if esperando_valor:
             if tipo in ("STRING", "NUMBER_FLOAT", "NUMBER_INT", "BOOLEAN", "IDENTIFIER"):
                 print(f"✅ Línea {num_linea}: Valor válido: {valor}")
-                esperando_valor = False
                 encontrado_var = False
+                esperando_asignacion = False
+                esperando_valor = False
             else:
                 print(f"❌ Línea {num_linea}: Valor no válido después de '=' → '{valor}'")
                 break
             i += 1
             continue
         
-        # Validar estructuras de control (if, while, for, etc.)
-        if valor in ("if", "while", "for"):
+        # Validar listas
+        if tipo == "GROUP" and valor == "{":
+            elementos = []
+            i += 1
+            while i < len(tokens) and not (tokens[i].lastgroup == "GROUP" and tokens[i].group() == "}"):
+                if tokens[i].lastgroup in ("NUMBER_INT", "NUMBER_FLOAT", "STRING", "BOOLEAN"):
+                    elementos.append(tokens[i].group())
+                elif tokens[i].group() == ",":
+                    pass  # separador permitido
+                else:
+                    print(f"❌ Línea {num_linea}: Elemento inválido en la lista: {tokens[i].group()}")
+                    break
+                i += 1
+            if i >= len(tokens) or tokens[i].group() != "}":
+                print(f"❌ Línea {num_linea}: Lista sin cierre '}}'")
+            else:
+                print(f"✅ Línea {num_linea}: Lista válida con elementos: {elementos}")
+            esperando_valor = False
+            encontrado_var = False
+            i += 1
+            continue
+        
+        # === Validación de estructuras de control ===
+        
+        # if y while → requieren apertura de paréntesis
+        if valor in ("if", "while"):
             if i + 1 >= len(tokens) or tokens[i + 1].group() != "(":
                 print(f"❌ Línea {num_linea}: Se esperaba '(' después de '{valor}'.")
                 break
-
-        # Validar 'for-in' (estructura especial)
-        if valor == "for" and i + 3 < len(tokens):
-            tok1 = tokens[i + 1].group()
-            tok2 = tokens[i + 2].group()
-            tok3 = tokens[i + 3].group()
-            if tok2 != "in":
-                print(f"❌ Línea {num_linea}: La estructura 'for (x) in (lista)' está mal formada.")
+            
+            # Buscar el cierre correspondiente
+            par_abierto = 1
+            j = i + 2  # después del primer (
+            while j < len(tokens) and par_abierto > 0:
+                if tokens[j].group() == "(":
+                    par_abierto += 1
+                elif tokens[j].group() == ")":
+                    par_abierto -= 1
+                j += 1
+            
+            if par_abierto != 0:
+                print(f"❌ Línea {num_linea}: Falta cerrar paréntesis en '{valor}'")
                 break
+            
+            print(f"✅ Línea {num_linea}: Estructura '{valor}(...)' válida.")
+            i = j # avanzar hasta después del ')'
+            continue
 
-        print(f"✅ Línea {num_linea}: Token válido → {tipo}: {valor}")
-        i += 1
+
+        # do while → se espera patrón: do { ... } while ( ... )
+        if valor == "do":
+            tiene_bloque = False
+            llave_abierta = 0
+            j = i + 1
+            while j < len(tokens):
+                if tokens[j].group() == "{":
+                    llave_abierta += 1
+                    tiene_bloque = True
+                elif tokens[j].group() == "}":
+                    llave_abierta -= 1
+                    if llave_abierta == 0:
+                        break
+                j += 1
+
+            if not tiene_bloque or llave_abierta != 0:
+                print(f"❌ Línea {num_linea}: Bloque '{{}}' mal definido después de 'do'")
+                break
+            else:
+                print(f"✅ Línea {num_linea}: Estructura 'do {{...}} while (...)' válida.")
+                i = j
+                continue
+
+        # for clásico: tres partes separadas por coma
+        if valor == "for":
+            if i + 1 >= len(tokens) or tokens[i + 1].group() != "(":
+                print(f"❌ Línea {num_linea}: Se esperaba '(' después de 'for'")
+                break
+            
+            par_abierto = 1
+            j = i + 2
+            coma_count = 0
+            while j < len(tokens) and par_abierto > 0:
+                if tokens[j].group() == "(":
+                    par_abierto += 1
+                    
+                elif tokens[j].group() == ",":
+                    coma_count += 1
+                    
+                elif tokens[j].group() == ")":
+                    par_abierto -= 1
+                j += 1
+
+            if par_abierto != 0:
+                print(f"❌ Línea {num_linea}: Falta cerrar paréntesis en estructura 'for'")
+                break
+            
+            if coma_count == 2:
+                print(f"✅ Línea {num_linea}: Estructura 'for (init, cond, inc)' válida.")
+                i = j
+                continue
+            else:
+                # for-in: estructura alternativa
+                sub_tokens = [t.group() for t in tokens[i:i + 6]]
+                if "in" in sub_tokens:
+                    print(f"✅ Línea {num_linea}: Estructura 'for-in' válida.")
+                else:
+                    print(f"❌ Línea {num_linea}: Estructura 'for' mal formada.")
+                    break
 
 def analizar_archivo_v5(nombre_archivo):
     try:
