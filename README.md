@@ -20,19 +20,20 @@ Cereza es un lenguaje de programación simple y didáctico inspirado en Python y
 
 - Las variables se declaran usando la palabra clave `var`.
 - Deben iniciar con una letra (mayúscula o minúscula).
-- Pueden contener letras, números, guiones bajos `_` o guiones `-` (solo en medio, no al principio ni al final).
+- Pueden contener letras y números, los guiones bajos `_` o guiones `-` no son válidos
 
 Ejemplos válidos:
 ```txt
 var edad = 25
-var nombre_usuario = "Ana"
-var valor-1 = -3.5
+var edad3 = 25
+var Edad3 = 25
 ```
 
 Ejemplos inválidos:
 ```txt
 var _variable  ❌
 var -nombre    ❌
+var nom@bre    ❌
 var 9inicio    ❌
 ```
 
@@ -68,7 +69,6 @@ var 9inicio    ❌
 |----------|--------------------|---------------------------|
 | `==`     | Igual a            | ✅ Válido                  |
 | `!=`     | Diferente de       | ✅ Válido                  |
-| `=!`     | Diferente de       | ✅ Alternativa permitida   |
 | `>`      | Mayor que          | ✅                        |
 | `<`      | Menor que          | ✅                        |
 | `>=`     | Mayor o igual que  | ✅                        |
@@ -88,10 +88,6 @@ var 9inicio    ❌
 |----------|----------------------------------|
 | `++`     | Incrementa en 1                  |
 | `--`     | Incrementa en 2                  |
-| `+=` o `=+` | Suma y asigna (`x += 3`)      |
-| `-=` o `=-` | Resta y asigna                |
-| `/=` o `=/` | Divide y asigna               |
-| `*=` o `=*` | Multiplica y asigna           |
 
 ---
 
@@ -103,19 +99,9 @@ var 9inicio    ❌
 if (<condición>) {
     <instrucciones>
 }
-elseif (<condición>) {
-    <instrucciones>
-}
 else {
     <instrucciones>
 }
-```
-
-O también con tabulaciones:
-
-```txt
-if (<condición>)
-    tab*<instrucción>
 ```
 
 ### Ciclos
@@ -123,17 +109,9 @@ if (<condición>)
 ```txt
 while (<condición>) {
     <instrucciones>
-}
-
-do {
-    <instrucciones>
-} while (<condición>)
+}hile (<condición>)
 
 for (<inicialización>, <condición>, <incremento>) {
-    <instrucciones>
-}
-
-for (<variable>) in (<lista>) {
     <instrucciones>
 }
 ```
@@ -170,7 +148,7 @@ O múltiples:
 No pueden usarse como nombres de variables:
 
 ```txt
-var, if, else, elseif, while, for, true, false, in, do
+var, if, else, while, for, true, false
 ```
 
 ---
@@ -183,7 +161,7 @@ var, if, else, elseif, while, for, true, false, in, do
 | Separación de operadores `= =`    | Advertencia         |
 | Operadores mal formados (`=>`)    | Error               |
 | Comentarios mal cerrados          | Error               |
-| Tabulación o llaves faltantes     | Error               |
+| Llaves o paréntesis faltantes     | Error               |
 
 ---
 
@@ -194,7 +172,5 @@ var, if, else, elseif, while, for, true, false, in, do
 | `- 9`                            | Espacio entre `-` y número no permitido |
 | `var1@`                          | Carácter no válido en variable          |
 | `if condicion`                   | Falta paréntesis                        |
-| `for variable in lista` (sin paréntesis) | Sintaxis incorrecta          |
-| Bloques sin tabulación o `{}`   | Error de estructura                     |
 
 ---

@@ -1,13 +1,15 @@
 import re
 
-# Palabras reservadas
+# Palabras que no se pueden usar como nombres de variables
 RESERVED = {"var", "if", "else", "while", "for", "true", "false"}
 
-# Operadores válidos y mal formados
+# Operadores mal escritos que deben marcarse como error
 BAD_OPERATORS = {'=>', '=<', '==>', '<==', '===', '!==', '->', '<-', '><'}
+
+# Detecta si alguien escribe = = en vez de ==
 SEPARATED_EQ = re.compile(r"= =")
 
-# Expresiones regulares para tokens
+# Define los tipos de tokens: numeros, strings, booleanos, identificadores, operadores, etc.
 TOKEN_REGEX = [
     ("COMMENT_LINE", r"#.*"),
     ("STRING", r"\".*?\"|'.*?'"),
@@ -25,10 +27,15 @@ TOKEN_REGEX = [
     ("UNKNOWN", r".")
 ]
 
+# Se copilan en una mega expresion regular para usarse en tokenize
 TOKEN_RE = re.compile(
     "|".join(f"(?P<{name}>{pattern})" for name, pattern in TOKEN_REGEX)
 )
 
+# Omite los espacios (WS)
+# Marca como UNKNOWN a aquellas expresiones no coincidentes con nada
+# Esto es lo que devuelve por ejemplos: 
+# [("IDENTIFIER", "var"), ("IDENTIFIER", "x"), ("OPERATOR", "="), ("NUMBER", "5")]
 def tokenize(line):
     pos = 0
     tokens = []
@@ -45,26 +52,39 @@ def tokenize(line):
         pos = match.end()
     return tokens
 
+# Esta funcion en general valida si un identificador es correcto
+# Recordar que los identificadores son los nombres de las variables
+# No pueden empezar con - o _, ni tampoco ser palabras reservadas
+# Si hay errores, devuelve False y un mensaje 
 def is_valid_identifier(name):
     if name in RESERVED:
+        # Verifica que no sea una palabra reservada
         return False, "No puede usar palabra reservada como identificador."
     if not re.match(r"^[a-zA-Z][a-zA-Z0-9]*$", name):
         if re.match(r"^[0-9]", name):
-            return False, "Identificador no puede comenzar con número."
+            # Verifica que no empiece con numero
+            return False, "❌ Identificador no puede comenzar con número."
         if re.match(r"^_", name):
-            return False, "Identificador no puede comenzar con guion bajo."
+            # Verifica que no empiece con _
+            return False, "❌ Identificador no puede comenzar con guion bajo."
         if re.match(r"^-", name):
-            return False, "Identificador no puede comenzar con guion."
+            # Verifica que no empiece con -
+            return False, "❌ Identificador no puede comenzar con guion."
         if " " in name:
-            return False, "Identificador no puede contener espacios."
+            # Verifica que no tenga espacios
+            return False, "❌ Identificador no puede contener espacios."
         if re.search(r"[^a-zA-Z0-9]", name):
-            return False, "Identificador contiene caracteres inválidos."
-        return False, "Identificador inválido."
-    return True, ""
+            # Verifica que contenga caracteres invalidos
+            return False, "❌ Identificador contiene caracteres inválidos."
+        return False, "❌ Identificador inválido."
+    # Devuleve mensaje de Identificador valido
+    return True, "✅ Identificador válido."
 
+# Verifica que los elementos de una lista {} sean del mismo tipo
 def check_list_homogeneity(elements):
     types = set()
     for e in elements:
+        # Solo acepta int, float, boolean, string
         if re.fullmatch(r"-?\d+", e):
             types.add("int")
         elif re.fullmatch(r"-?\d+\.\d+", e):
@@ -74,9 +94,13 @@ def check_list_homogeneity(elements):
         elif re.fullmatch(r"(['\"])(?:\\.|(?!\1).)*\1", e):
             types.add("string")
         else:
+            # Si hay un elemento invalido envia un mensaje
             return False, f"Elemento inválido en lista: {e}"
     return len(types) == 1, f"Lista no homogénea: contiene tipos {types}"
 
+# Busca los bloques de comentario, si los encuentra verifica que esten 
+# bien cerrados, y si lo estan los omite. En cambio si no lo estan 
+# devuelve un mensaje de error
 def extraer_y_marcar_comentarios_multilinea(texto):
     # Detectar comentarios multilínea no cerrados
     if texto.count("/*") != texto.count("*/"):
@@ -85,9 +109,11 @@ def extraer_y_marcar_comentarios_multilinea(texto):
     texto_limpio = re.sub(r"/\*.*?\*/", "", texto, flags=re.DOTALL)
     return texto_limpio, len(bloques)
 
+# Analiza una línea individual, ya limpia. 
 def analyze_line(line, lineno):
     # Comentario de línea
     if line.strip().startswith("#"):
+        print("🟡 Linea de comentario ignorada")
         return  # Ignorar línea completa
 
     # Advertencia por punto y coma al final
@@ -97,26 +123,38 @@ def analyze_line(line, lineno):
 
     # Detectar operadores mal formados
     if SEPARATED_EQ.search(line):
+        # Detecta especificamente a aquellos = = que esten separados y 
+        # devuelve una advertencia 
         print(f"⚠️  Línea {lineno}: Operadores '=' separados. Use '=='.")
 
     for bad in BAD_OPERATORS:
+        # Identifica si el operador esta invalido y envia un 
+        # mensaje de error
         if bad in line:
             print(f"❌ Línea {lineno}: Operador mal formado '{bad}'.")
             return
 
+    # Tokeniza la linea
+    # Tokennizar una linea es dividir esa linea de codigo en sus 
+    # partes minimas reconocibles, llamadas tokens
     tokens = tokenize(line)
     n = len(tokens)
     i = 0
 
+    # Empieza el analisis profundo
     while i < n:
         kind, value = tokens[i]
 
+        # Verifica si el identificador existe, si es valido
+        # si despues del = haya un valor
         if kind == "IDENTIFIER" and value == "var":
             if i+1 >= n:
                 print(f"❌ Línea {lineno}: Falta identificador en declaración de variable.")
                 break
             id_kind, id_value = tokens[i+1]
             valid, msg = is_valid_identifier(id_value)
+            
+            # Devuelve un mensaje de error en caso de que valid sea False
             if not valid:
                 print(f"❌ Línea {lineno}: {msg}")
                 break
@@ -132,10 +170,17 @@ def analyze_line(line, lineno):
                     if val_value.startswith("-") and (i+2 < n and tokens[i+2][1] == "-" and tokens[i+3][0] == "NUMBER"):
                         print(f"❌ Línea {lineno}: Espacio entre '-' y número no permitido.")
                         break
+                    
+                    print("✅ Línea {lineno}: NUMBER válido.")
+                    
                 elif val_kind == "STRING":
-                    pass
+                    print("✅ Línea {lineno}: STRING válido.")
+                    # pass
+                    
                 elif val_kind == "BOOLEAN":
-                    pass
+                    print("✅ Línea {lineno}: BOOLEAN válido.")
+                    # pass
+                    
                 elif val_kind == "LBRACE":
                     # Analizar lista
                     elements = []
@@ -156,6 +201,8 @@ def analyze_line(line, lineno):
                     if not ok:
                         print(f"❌ Línea {lineno}: {msg}")
                         break
+                    
+                    print("✅ LISTA válida.")
                 else:
                     print(f"❌ Línea {lineno}: Valor inválido para variable.")
                     break
@@ -163,6 +210,7 @@ def analyze_line(line, lineno):
                 print(f"❌ Línea {lineno}: Falta '=' en declaración de variable.")
                 break
 
+        # Verificar estructuras como if, while, for
         elif kind == "IDENTIFIER" and value in ("if", "while", "for"):
             # Validar paréntesis
             if i+1 >= n or tokens[i+1][0] != "LPAREN":
@@ -185,12 +233,16 @@ def analyze_line(line, lineno):
             if j >= n or tokens[j][0] != "LBRACE":
                 print(f"❌ Línea {lineno}: Falta '{{' después de condición en '{value}'.")
                 break
+            
+            print(f"✅ Línea {lineno}: ESTRUCTURA {value} válido.")
         
         elif kind == "IDENTIFIER" and value == "else":
             j = i + 1
             if j >= n or tokens[j][0] != "LBRACE":
                 print(f"❌ Línea {lineno}: Falta '{{' después de '{value}'.")
                 break
+            
+            print(f"✅ {value} válido.")
 
 
         elif kind == "IDENTIFIER":
@@ -198,6 +250,8 @@ def analyze_line(line, lineno):
             if not valid:
                 print(f"❌ Línea {lineno}: {msg}")
                 break
+            
+            print(f"✅ IDENTIFIER válido.")
 
         elif kind == "OPERATOR":
             if value in BAD_OPERATORS:
@@ -210,19 +264,22 @@ def analyze_line(line, lineno):
 
         i += 1
 
+# Abre el archivo y omite comentarios multilínea
 def analyze_file(filename):
     try:
         with open(filename, encoding="utf-8") as f:
             contenido = f.read()
 
+        # Omite comentarios multilínea
         contenido_limpio, num_bloques = extraer_y_marcar_comentarios_multilinea(contenido)
         for _ in range(num_bloques):
             print("🟡 Bloque de comentario ignorado (multilínea)")
 
         brace_stack = []
 
+        # Recorre linea por linea
         for num_linea, linea in enumerate(contenido_limpio.splitlines(), 1):
-            # Balance global de llaves
+            # Verifica si hay llaves sin cerrar
             for c in linea:
                 if c == '{':
                     brace_stack.append(num_linea)
@@ -231,7 +288,8 @@ def analyze_file(filename):
                         print(f"❌ Línea {num_linea}: Llave '}}' sin abrir.")
                     else:
                         brace_stack.pop()
-
+                        
+            # Se llama a analyze_line() para cada línea con contenido
             if linea.strip():
                 analyze_line(linea, num_linea)
 
@@ -242,12 +300,10 @@ def analyze_file(filename):
         print(f"❌ No se encontró el archivo '{filename}'")
 
 # ----------- USO -----------
-# Guarda este script como analizador_cereza.py
-# Ejecuta con: python analizador_cereza.py archivo.cereza
-
+# Ejecutar: python analizador_cereza.py archivo.cereza
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
-        print("Uso: python analizador_cereza.py archivo.cereza")
+        print("python analizador_cereza.py archivo.cereza")
     else:
         analyze_file(sys.argv[1])

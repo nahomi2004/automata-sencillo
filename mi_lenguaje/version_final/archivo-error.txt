@@ -1,0 +1,40 @@
+/* Comentario sin cerrar
+
+# Variables inválidas
+var 9edad = 20                
+var edad = - 20                
+var _nombre = "Ana"           
+var valor -8               
+var nombre completo = "Ana"  
+var = 4                       
+
+# Asignaciones
+var edad == 20      
+var edad >= 20      
+
+# Numeros invalidos
+var x = 3 .5         
+var y = .5           
+var z = 3.           
+
+# Cadenas de texto invalidas 
+var saludo = hola          
+var texto = "hola         
+
+# Ciclos y condicionales invalidos 
+
+if edad > 18 {
+
+} else
+
+for (i=0; i<=5; i++) {
+
+}        
+
+# Operadores mal usados 
+var edad =< 20     
+var edad => 20 
+20 = = 30    
+
+# Errores generales 
+var x = @2
