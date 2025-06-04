@@ -125,7 +125,7 @@ def analyze_line(line, lineno):
     if SEPARATED_EQ.search(line):
         # Detecta especificamente a aquellos = = que esten separados y 
         # devuelve una advertencia 
-        print(f"⚠️  Línea {lineno}: Operadores '=' separados. Use '=='.")
+        print(f"⚠️ Línea {lineno}: Operadores '=' separados. Use '=='.")
 
     for bad in BAD_OPERATORS:
         # Identifica si el operador esta invalido y envia un 
@@ -148,12 +148,13 @@ def analyze_line(line, lineno):
         # Verifica si el identificador existe, si es valido
         # si despues del = haya un valor
         if kind == "IDENTIFIER" and value == "var":
+            print(f"✅ Se leyo la palabra reservada {value}")
+            
             if i+1 >= n:
                 print(f"❌ Línea {lineno}: Falta identificador en declaración de variable.")
                 break
             id_kind, id_value = tokens[i+1]
             valid, msg = is_valid_identifier(id_value)
-            
             # Devuelve un mensaje de error en caso de que valid sea False
             if not valid:
                 print(f"❌ Línea {lineno}: {msg}")
@@ -171,14 +172,14 @@ def analyze_line(line, lineno):
                         print(f"❌ Línea {lineno}: Espacio entre '-' y número no permitido.")
                         break
                     
-                    print("✅ Línea {lineno}: NUMBER válido.")
+                    print(f"✅ Token {val_kind} Línea {lineno}: NUMBER válido.")
                     
                 elif val_kind == "STRING":
-                    print("✅ Línea {lineno}: STRING válido.")
+                    print(f"✅ Token {val_kind} Línea {lineno}: STRING válido.")
                     # pass
                     
                 elif val_kind == "BOOLEAN":
-                    print("✅ Línea {lineno}: BOOLEAN válido.")
+                    print(f"✅ Token {val_kind} Línea {lineno}: BOOLEAN válido.")
                     # pass
                     
                 elif val_kind == "LBRACE":
@@ -212,6 +213,8 @@ def analyze_line(line, lineno):
 
         # Verificar estructuras como if, while, for
         elif kind == "IDENTIFIER" and value in ("if", "while", "for"):
+            print(f"✅ Se leyo la palabra reservada {value}")
+            
             # Validar paréntesis
             if i+1 >= n or tokens[i+1][0] != "LPAREN":
                 print(f"❌ Línea {lineno}: Falta paréntesis de condición en '{value}'.")
