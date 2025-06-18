@@ -22,7 +22,7 @@ TOKEN_REGEX = [
     ("SEMICOLON", r";"),
     ("COMMA", r","),
     ("OPERATOR", r"==|!=|<=|>=|&&|\|\||\+\+|--|[+\-*/%<>=&|]"),
-    ("IDENTIFIER", r"[a-zA-Z][a-zA-Z0-9]*"),
+    ("IDENTIFIER", r"[a-zA-Z][a-zA-Z]*"),
     ("WS", r"\s+"),
     ("UNKNOWN", r".")
 ]
