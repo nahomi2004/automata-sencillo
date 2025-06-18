@@ -78,7 +78,7 @@ var x3    ❌
 | Operador | Acción                          |
 |----------|----------------------------------|
 | `++`     | Incrementa en 1                  |
-| `--`     | Incrementa en 2                  |
+| `--`     | Decrementa en 1                  |
 
 ---
 

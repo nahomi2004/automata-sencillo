@@ -1,0 +1,32 @@
+# GitHub https://github.com/nahomi2004/automata-sencillo/tree/main
+# Declaración de variables
+var edad = 20
+var nombre = "nahomi"
+var bool = true
+var lista = {1, 2, 3, 4} 
+var intNegativo = -8
+var decimalNegativo = -9.6
+
+# Condicionales
+
+if (edad >= 18) {
+    var estado = "adulto"
+} else {
+    var estado = "Eres un niño"
+}
+
+# Ciclos Repetitivos
+
+var edad = 0
+
+while (edad >= 18) {
+    edad++
+}
+
+for (var i=0, i<=18, i++) {
+    var ninio = "uwu"
+}
+
+/*
+Comentario
+*/
