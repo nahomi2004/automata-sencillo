@@ -8,11 +8,9 @@ Cereza es un lenguaje de programación simple y didáctico inspirado en Python y
 ## 📌 Estructura general del lenguaje
 
 - Las líneas de código terminan con un salto de línea (`\n`), no se requiere `;` al final.
-- Si un `;` se encuentra al final de una línea, será ignorado y se emitirá una advertencia.
 - Los bloques se pueden estructurar mediante:
-  - **Tabulaciones** (como en Python).
   - **Llaves `{}`** (como en C/C++).
-- Si no se usa ni tabulación ni llaves tras estructuras como `if`, `while`, `for`, se marcará **error**.
+- Si no se usa llaves tras estructuras como `if`, `while`, se marcará **error**.
 
 ---
 
@@ -20,13 +18,13 @@ Cereza es un lenguaje de programación simple y didáctico inspirado en Python y
 
 - Las variables se declaran usando la palabra clave `var`.
 - Deben iniciar con una letra (mayúscula o minúscula).
-- Pueden contener letras y números, los guiones bajos `_` o guiones `-` no son válidos
+- No pueden contener números, ni guiones bajos `_` o guiones `-`.
 
 Ejemplos válidos:
 ```txt
 var edad = 25
-var edad3 = 25
-var Edad3 = 25
+var Edad = 25
+var edaD = 25
 ```
 
 Ejemplos inválidos:
@@ -34,7 +32,7 @@ Ejemplos inválidos:
 var _variable  ❌
 var -nombre    ❌
 var nom@bre    ❌
-var 9inicio    ❌
+var x3    ❌
 ```
 
 ---
@@ -45,9 +43,9 @@ var 9inicio    ❌
 |-------------|--------------|---------------------------|
 | Entero      | Dígitos       | `12`, `0`, `-45`         |
 | Decimal     | Dígitos con punto | `3.14`, `-0.5`        |
-| Cadena      | Entre comillas simples o dobles | `"hola"`, `'texto'` |
+| Cadena      | Entre comillas dobles | `"hola"` |
 | Booleano    | `true` o `false` | `true`               |
-| Lista       | Entre llaves, homogénea | `{1; 2; 3}`, `{"a"; "b"}` |
+| Lista       | Entre llaves, homogénea | `{1, 2, 3}`, `{"a", "b"}` |
 
 ---
 
@@ -61,7 +59,6 @@ var 9inicio    ❌
 | `-`      | Resta            |
 | `*`      | Multiplicación   |
 | `/`      | División         |
-| `%`      | Módulo           |
 
 ### Relacionales
 
@@ -74,13 +71,7 @@ var 9inicio    ❌
 | `>=`     | Mayor o igual que  | ✅                        |
 | `=>`     | ❌ No reconocido   | ❌ Error                  |
 | `<=`     | Menor o igual que  | ✅                        |
-
-### Lógicos
-
-| Operador | Significado |
-|----------|------------|
-| `&&` o `&` | AND       |
-| `||` o `|` | OR        |
+| `>=`     | ❌ No reconocido  | ❌ Error                   |
 
 ### Incrementales y compuestos
 
@@ -99,19 +90,12 @@ var 9inicio    ❌
 if (<condición>) {
     <instrucciones>
 }
-else {
-    <instrucciones>
-}
 ```
 
 ### Ciclos
 
 ```txt
 while (<condición>) {
-    <instrucciones>
-}hile (<condición>)
-
-for (<inicialización>, <condición>, <incremento>) {
     <instrucciones>
 }
 ```
@@ -123,13 +107,7 @@ for (<inicialización>, <condición>, <incremento>) {
 Solo se permiten condiciones del tipo:
 
 ```
-<variable> <operador> <variable>
-```
-
-O múltiples:
-
-```
-<variable> <operador> <variable> <operador_logico> <variable> <operador> <variable>
+<variable> <operador relacional> <variable>
 ```
 
 ---
@@ -139,7 +117,6 @@ O múltiples:
 | Forma       | Tipo        |
 |-------------|-------------|
 | `# texto`   | Una línea   |
-| `/* texto */`   | Multilínea |
 
 ---
 
@@ -148,29 +125,19 @@ O múltiples:
 No pueden usarse como nombres de variables:
 
 ```txt
-var, if, else, while, for, true, false
+var, if, while, true, false
 ```
-
----
-
-## ⚠️ Advertencias comunes
-
-| Situación                          | Acción              |
-|-----------------------------------|---------------------|
-| Uso de `;` al final de línea      | Ignorado con aviso  |
-| Separación de operadores `= =`    | Advertencia         |
-| Operadores mal formados (`=>`)    | Error               |
-| Comentarios mal cerrados          | Error               |
-| Llaves o paréntesis faltantes     | Error               |
 
 ---
 
 ## ❌ Errores comunes
 
-| Error                             | Descripción                             |
+| Error                             | Descripción                            |
 |----------------------------------|-----------------------------------------|
 | `- 9`                            | Espacio entre `-` y número no permitido |
 | `var1@`                          | Carácter no válido en variable          |
 | `if condicion`                   | Falta paréntesis                        |
+| Operadores mal formados (`=>`)    | Error                                  |
+| Llaves o paréntesis faltantes     | Error                                  |
 
 ---
