@@ -32,6 +32,11 @@ def tokenize_line(line, lineno):
     """Devuelve los tokens reconocidos en una línea o errores si hay símbolos inválidos."""
     tokens = []
 
+    ''' En caso de que se quiera enviar el comentario como token
+    if line.strip().startswith('#'): 
+        return [("COMMENT_LINE", lineno, line.strip())] # ✅ Simple y limpio
+    '''
+    
     if line.strip().endswith(";"):
         return [("❌ ERROR", lineno, "; al final de línea no es válido")]
 
@@ -74,8 +79,10 @@ def analizador_lexico_cereza(texto):
     resultados = []
     lineas = texto.splitlines()
     for num, linea in enumerate(lineas, 1):
+        
         if linea.strip().startswith("#") or not linea.strip():
             continue  # ignorar comentarios o líneas vacías
+        
         resultado = tokenize_line(linea, num)
         resultados.append((num, resultado))
     return resultados
