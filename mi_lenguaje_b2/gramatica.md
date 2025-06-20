@@ -1,3 +1,4 @@
+```bash
 <PROGRAMA> -> <BLOQUE DE CODIGO>
 
 <BLOQUE DE CODIGO> -> <SENTENCIA>
@@ -35,3 +36,5 @@
 <OP RELACIONAL> -> <
 <OP RELACIONAL> -> >=
 <OP RELACIONAL> -> <=
+
+```
