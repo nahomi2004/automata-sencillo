@@ -7,34 +7,36 @@
 <SENTENCIA> -> <DECLARACION VARIABLE>
 <SENTENCIA> -> <WHILE>
 <SENTENCIA> -> <IF>
-<SENTENCIA> -> id <OPERADOR INCREMENTAL>
+<SENTENCIA> -> id ++
+<SENTENCIA> -> id --
 
 <DECLARACION VARIABLE> -> var id = <VALOR>
 <DECLARACION VARIABLE> -> var id = <LISTA>
 
-<VALOR> -> STRING
-<VALOR> -> NUMBER
-<VALOR> -> BOOLEAN
+<VALOR> -> string
+<VALOR> -> number
+<VALOR> -> boolean
+<VALOR> -> id + id
+<VALOR> -> id - id
+<VALOR> -> id * id
+<VALOR> -> id / id
 
 <LISTA> -> {<VALOR LISTA>}
 
-<VALOR LISTA> -> <VALOR>
-<VALOR LISTA> -> <VALOR>, <VALOR LISTA>
+<VALOR LISTA> -> number
+<VALOR LISTA> -> number, <VALOR LISTA>
 
 <WHILE> -> while (<CONDICION>) { <BLOQUE DE CODIGO> }
 
 <IF> -> if (<CONDICION>) { <BLOQUE DE CODIGO> }
 
-<CONDICION> -> id <OP RELACIONAL> id
-
-<OPERADOR INCREMENTAL> -> ++  
-<OPERADOR INCREMENTAL> -> --
-
-<OP RELACIONAL> -> ==
-<OP RELACIONAL> -> !=
-<OP RELACIONAL> -> >
-<OP RELACIONAL> -> <
-<OP RELACIONAL> -> >=
-<OP RELACIONAL> -> <=
+<CONDICION> -> id == id
+<CONDICION> -> id != id
+<CONDICION> -> id > id
+<CONDICION> -> id < id
+<CONDICION> -> id <= id
+<CONDICION> -> id >= id
 
 ```
+
+![alt text](image.png)

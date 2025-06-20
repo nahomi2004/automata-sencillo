@@ -45,7 +45,7 @@ var x3    ❌
 | Decimal     | Dígitos con punto | `3.14`, `-0.5`        |
 | Cadena      | Entre comillas dobles | `"hola"` |
 | Booleano    | `true` o `false` | `true`               |
-| Lista       | Entre llaves, homogénea | `{1, 2, 3}`, `{"a", "b"}` |
+| Lista       | Entre llaves, homogéneas numericas | `{1, 2, 3}` |
 
 ---
 
