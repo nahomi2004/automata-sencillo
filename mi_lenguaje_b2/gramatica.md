@@ -38,3 +38,4 @@
 
 <FACTOR> -> number
 <FACTOR> -> id
+<FACTOR> -> (<EXPR>)
