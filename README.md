@@ -67,11 +67,7 @@ var x3    ❌
 | `==`     | Igual a            | ✅ Válido                  |
 | `!=`     | Diferente de       | ✅ Válido                  |
 | `>`      | Mayor que          | ✅                        |
-| `<`      | Menor que          | ✅                        |
-| `>=`     | Mayor o igual que  | ✅                        |
-| `=>`     | ❌ No reconocido   | ❌ Error                  |
-| `<=`     | Menor o igual que  | ✅                        |
-| `>=`     | ❌ No reconocido  | ❌ Error                   |
+| `<`      | Menor que          | ✅                        
 
 ### Incrementales y compuestos
 
