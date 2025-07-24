@@ -1,0 +1,34 @@
+P = PROGRAMA
+B = BLOQUE
+S = SENTENCIA
+D = DECL_VAR
+I = IF
+W = WHILE
+C = COND
+E = EXPR
+T = TERM
+F = FACTOR
+
+0.  <PROGRAMA>' → <PROGRAMA>
+1.  <PROGRAMA> → <BLOQUE>
+2.  <BLOQUE> → <SENTENCIA>
+3.  <BLOQUE> → <SENTENCIA> <BLOQUE>
+4.  <SENTENCIA> → <DECL_VAR>
+5.  <SENTENCIA> → <IF>
+6.  <SENTENCIA> → <WHILE>
+7.  <DECL_VAR> → var id = <EXPR>
+8.  <IF> → if ( <COND> ) { <BLOQUE> }
+9.  <WHILE> → while ( <COND> ) { <BLOQUE> }
+10.  <COND> → id == id
+11. <COND> → id != id
+12. <COND> → id > id
+13. <COND> → id < id
+14. <EXPR> → <TERM> + <EXPR>
+15. <EXPR> → <TERM> - <EXPR>
+16. <EXPR> → <TERM>
+17. <TERM> → <FACTOR> * <TERM>
+18. <TERM> → <FACTOR> / <TERM>
+19. <TERM> → <FACTOR>
+20. <FACTOR> → number
+21. <FACTOR> → id
+22. <FACTOR> → ( <EXPR> )

@@ -2,26 +2,30 @@ import re
 
 # === 🍒 Analizador Léxico para el Lenguaje Cereza ===
 
-# Palabras reservadas del lenguaje
-RESERVED = {"var", "if", "else", "while", "for", "true", "false"}
+RESERVED = {"var", "if", "while"}
 
-# Operadores mal formados
 BAD_OPERATORS = {"=>", "=<", "==>", "<==", "===", "!==", "->", "<-", "><"}
 SEPARATED_EQ = re.compile(r"= =")
 
-# Definición de los tipos de tokens
 TOKEN_REGEX = [
     ("COMMENT_LINE", r"#.*"),
-    ("STRING", r'".*?"|\'.*?\''),
-    ("NUMBER", r"-?\d+\.\d+|-?\d+"),
-    ("BOOLEAN", r"\btrue\b|\bfalse\b"),
+    ("NUMBER", r"-?\d+"),
+    ("EQ", r"=="),
+    ("NEQ", r"!="),
+    ("GE", r">="),
+    ("LE", r"<="),
+    ("GT", r">"),
+    ("LT", r"<"),
+    ("PLUS", r"\+"),
+    ("MINUS", r"-"),
+    ("MULT", r"\*"),
+    ("DIV", r"/"),
+    ("ASSIGN", r"="),
     ("LBRACE", r"\{"),
     ("RBRACE", r"\}"),
     ("LPAREN", r"\("),
     ("RPAREN", r"\)"),
-    ("COMMA", r","),
-    ("OPERATOR", r"==|!=|<=|>=|\+\+|--|[+\-*/%<>=]"),
-    ("IDENTIFIER", r"[a-zA-Z]+"),
+    ("ID", r"[a-zA-Z_][a-zA-Z_0-9]*"),
     ("WS", r"\s+"),
     ("UNKNOWN", r".")
 ]
@@ -29,14 +33,8 @@ TOKEN_REGEX = [
 TOKEN_RE = re.compile("|".join(f"(?P<{name}>{pattern})" for name, pattern in TOKEN_REGEX))
 
 def tokenize_line(line, lineno):
-    """Devuelve los tokens reconocidos en una línea o errores si hay símbolos inválidos."""
     tokens = []
 
-    ''' En caso de que se quiera enviar el comentario como token
-    if line.strip().startswith('#'): 
-        return [("COMMENT_LINE", lineno, line.strip())] # ✅ Simple y limpio
-    '''
-    
     if line.strip().endswith(";"):
         return [("❌ ERROR", lineno, "; al final de línea no es válido")]
 
@@ -45,7 +43,7 @@ def tokenize_line(line, lineno):
 
     for bad in BAD_OPERATORS:
         if bad in line:
-            return [("❌ ERROR", lineno, f"Operador mal formado '{bad}'")] 
+            return [("❌ ERROR", lineno, f"Operador mal formado '{bad}'")]
 
     pos = 0
     while pos < len(line):
@@ -63,9 +61,9 @@ def tokenize_line(line, lineno):
 
         if kind == "UNKNOWN":
             tokens.append(("❌ ERROR", lineno, f"Carácter no válido: '{value}'"))
-        elif kind == "IDENTIFIER" and value in RESERVED:
+        elif kind == "ID" and value in RESERVED:
             tokens.append(("✅ RESERVED", value))
-        elif kind == "IDENTIFIER":
+        elif kind == "ID":
             tokens.append(("✅ IDENTIFIER", value))
         else:
             tokens.append(("✅", kind, value))
@@ -75,14 +73,11 @@ def tokenize_line(line, lineno):
     return tokens
 
 def analizador_lexico_cereza(texto):
-    """Función que tokeniza un texto completo (líneas de código) y retorna lista de tokens o errores."""
     resultados = []
     lineas = texto.splitlines()
     for num, linea in enumerate(lineas, 1):
-        
         if linea.strip().startswith("#") or not linea.strip():
-            continue  # ignorar comentarios o líneas vacías
-        
+            continue
         resultado = tokenize_line(linea, num)
         resultados.append((num, resultado))
     return resultados

@@ -1,0 +1,30 @@
+<PROGRAMA> -> <BLOQUE>
+
+<BLOQUE> -> <SENTENCIA>;
+<BLOQUE> -> <SENTENCIA>; <BLOQUE>
+
+<SENTENCIA> -> <DECL_VAR>
+<SENTENCIA> -> <IF>
+<SENTENCIA> -> <WHILE>
+
+<DECL_VAR> -> var id = <EXPR>
+
+<IF> -> if ( <COND> ) { <BLOQUE> }
+<WHILE> -> while ( <COND> ) { <BLOQUE> }
+
+<COND> -> id == id
+<COND> -> id != id
+<COND> -> id > id
+<COND> -> id < id
+
+<EXPR> -> <TERM> + <EXPR>
+<EXPR> -> <TERM> - <EXPR>
+<EXPR> -> <TERM>
+
+<TERM> -> <FACTOR> * <TERM>
+<TERM> -> <FACTOR> / <TERM>
+<TERM> -> <FACTOR>
+
+<FACTOR> -> number
+<FACTOR> -> id
+<FACTOR> -> ( <EXPR> )
