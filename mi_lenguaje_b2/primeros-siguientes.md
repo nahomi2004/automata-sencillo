@@ -6,6 +6,7 @@
 
 | No Terminal | PRIMEROS                     |
 | ----------- | ---------------------------- |
+| `PROGRAMA'` | `var, if, while`             |
 | `PROGRAMA`  | `var, if, while`             |
 | `BLOQUE`    | `var, if, while`             |
 | `SENTENCIA` | `var, if, while`             |
@@ -21,13 +22,14 @@
 
 | No Terminal | SIGUIENTE                                                   |
 | ----------- | ----------------------------------------------------------- |
+| `PROGRAMA'` | `$`                                                         |
 | `PROGRAMA`  | `$`                                                         |
 | `BLOQUE`    | `}`, `$`                                                    |
-| `SENTENCIA` | `;`, `var`, `if`, `while`, `}`, `$`                         |
-| `DECL_VAR`  | `;`, `var`, `if`, `while`, `}`, `$`                         |
-| `IF`        | `;`, `var`, `if`, `while`, `}`, `$`                         |
-| `WHILE`     | `;`, `var`, `if`, `while`, `}`, `$`                         |
+| `SENTENCIA` | `;`                                                         |
+| `DECL_VAR`  | `;`                                                         |
+| `IF`        | `;`                                                         |
+| `WHILE`     | `;`                                                         |
 | `COND`      | `)`                                                         |
-| `EXPR`      | `)`, `;`, `var`, `if`, `while`, `}`, `$`                    |
-| `TERM`      | `+`, `-`, `)`, `;`, `var`, `if`, `while`, `}`, `$`          |
-| `FACTOR`    | `*`, `/`, `+`, `-`, `)`, `;`, `var`, `if`, `while`, `}`, `$`|
+| `EXPR`      | `)`, `;`                                                    |
+| `TERM`      | `+`, `-`, `)`, `;`                                          |
+| `FACTOR`    | `*`, `/`, `+`, `-`, `)`, `;`                                |

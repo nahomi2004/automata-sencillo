@@ -1,3 +1,5 @@
+<PROGRAMA>' -> <PROGRAMA> $
+
 <PROGRAMA> -> <BLOQUE>
 
 <BLOQUE> -> <SENTENCIA>;

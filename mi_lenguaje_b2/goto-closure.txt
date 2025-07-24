@@ -1,32 +1,24 @@
 Closure I0
-P' → · P
-P → · B
-B → · S
-B → · S B
-S → · D
-S → · I
-S → · W
-D → · var id = E
-I → · if (C) { B }
-W → · while (C) { B }
+P' -> · P
+P  -> · B
+B  -> · S ;
+B  -> · S ; B
+S  -> · D
+S  -> · I
+S  -> · W
+D  -> · var id = E
+I  -> · if ( C ) { B }
+W  -> · while ( C ) { B }
 
 Goto (I0, P) -> I1
-P' → P · 
+P' → P ·
 
 Goto (I0, B) -> I2
 P → B ·
 
 Goto (I0, S) -> I3
-B → S ·
-B → S · B
-B → · S
-B → · S B
-S → · D
-S → · I
-S → · W
-D → · var id = E
-I → · if (C) { B }
-W → · while (C) { B }
+B → S · ;
+B → S · ; B
 
 Goto (I0, D) -> I4
 S → D ·
@@ -46,50 +38,56 @@ I → if · (C) {B}
 Goto (I0, while) -> I9
 W → while · (C) {B}
 
-Goto (I3, B) -> I10
-B → S B ·
+Goto (I1, while) -> I10
+P' -> P $ ·
 
-Goto (I3, S) -> I3
-B → S ·
-B → S · B
-… lo mismo que en I3
+Goto (I3, ;) -> I11
+B → S; ·
+B → S; ·  B
+B → · S;
+B → · S; B
+S → · D
+S → · I
+S → · W
+D → · var id = E
+I → · if (C) { B }
+W → · while (C) { B }
 
-Goto (I3, D) -> I4
-S → D ·
-
-Goto (I3, I) -> I5
-S → I ·
-
-Goto (I3, W) -> I6
-S → W ·
-
-Goto (I3, var) -> I7
-D → var · id = E
-
-Goto (I3, if) -> I8
-I → if · (C) {B}
-
-Goto (I3, while) -> I9
-W → while · (C) {B}
-
-Goto (I7, id) -> I11
+Goto (I7, id) -> I12
 D → var id · = E
 
-Goto (I8, ‘(’) -> I12
-I → if (· C) {B}
+Goto (I8, ‘(’) -> I13
+I → if ( · C) {B}
 C → · id == id
 C → · id != id
 C → · id > id
 C → · id < id
 
-Goto (I9, ‘(’) -> I13
-W → while (· C) {B}
+Goto (I9, ‘(’) -> I14
+W → while ( · C) {B}
 C → · id == id
 C → · id != id
 C → · id > id
 C → · id < id
 
-Goto (I11, =) -> I14
+Goto (I11, B) -> I15
+B → S; B ·
+
+Goto (I11, S) -> I3
+
+Goto (I11, D) -> I4
+
+Goto (I11, I) -> I5
+
+Goto (I11, W) -> I6
+
+Goto (I11, var) -> I7
+
+Goto (I11, if) -> I8
+
+Goto (I11, while) -> I9
+
+Goto (I12, =) -> I16
 D → var id = · E
 E → · T + E
 E → · T – E
@@ -99,46 +97,46 @@ T → · F / T
 T → · F
 F → · number
 F → · id
-F → · (E) 
-
-Goto (I12, C) -> I15
-I → if (C · ) {B}
-
-Goto (I12, id) -> I16
-C → id · == id
-C → id · != id
-C → id · > id
-C → id · < id 
+F → · (E)
 
 Goto (I13, C) -> I17
-W → while (C · ) {B}
+I → if (C · ) {B}
 
-Goto (I13, id) -> I16
+Goto (I13, id) -> I18
 C → id · == id
 C → id · != id
 C → id · > id
 C → id · < id
 
-Goto (I14, E) -> I18
+Goto (I14, C) -> I19
+W → while (C · ) {B}
+
+Goto (I14, id) -> I18
+C → id · == id
+C → id · != id
+C → id · > id
+C → id · < id
+
+Goto (I16, E) -> I20
 D → var id = E ·
 
-Goto (I14, T) -> I19
+Goto (I16, T) -> I21
 E → T · + E
 E → T · – E
 E → T ·
 
-Goto (I14, F) -> I20
+Goto (I16, F) -> I22
 T → F · * T
 T → F · / T
 T → F ·
 
-Goto (I14, number) -> I21
+Goto (I16, number) -> I23
 F → number ·
 
-Goto (I14, id) -> I22
+Goto (I16, id) -> I24
 F → id ·
 
-Goto (I14, ‘(’) -> I23
+Goto (I16, ‘(’) -> I25
 F → ( · E)
 E → · T + E
 E → · T – E
@@ -150,25 +148,25 @@ F → · number
 F → · id
 F → · (E)
 
-Goto (I15, ‘)’) -> I24
+Goto (I17, ‘)’) -> I26
 I → if (C) · {B}
 
-Goto (I16, ==) -> I25
+Goto (I18, ==) -> I27
 C → id == · id
 
-Goto (I16, !=) -> I26
+Goto (I18, !=) -> I28
 C → id != · id
 
-Goto (I16, >) -> I27
+Goto (I18, >) -> I29
 C → id > · id
 
-Goto (I16, <) -> I28
+Goto (I18, <) -> I30
 C → id < · id
 
-Goto (I17, ‘)’) -> I29
+Goto (I19, ‘)’) -> I31
 W → while (C) · {B}
 
-Goto (I19, +) -> I30
+Goto (I21, +) -> I32
 E → T + · E
 E → · T + E
 E → · T – E
@@ -180,7 +178,7 @@ F → · number
 F → · id
 F → · (E)
 
-Goto (I19, -) -> I31
+Goto (I21, -) -> I33
 E → T - · E
 E → · T + E
 E → · T – E
@@ -192,7 +190,7 @@ F → · number
 F → · id
 F → · (E)
 
-Goto (I20, *) -> I32
+Goto (I22, *) -> I34
 T → F * · T
 T → · F * T
 T → · F / T
@@ -201,7 +199,7 @@ F → · number
 F → · id
 F → · (E)
 
-Goto (I20, /) -> I33
+Goto (I22, /) -> I35
 T → F / · T
 T → · F * T
 T → · F / T
@@ -210,20 +208,20 @@ F → · number
 F → · id
 F → · (E)
 
-Goto (I23, E) -> I34
+Goto (I25, E) -> I36
 F → (E · )
 
-Goto (I23, T) -> I19
+Goto (I25, T) -> I21
 
-Goto (I23, F) -> I20
+Goto (I25, F) -> I22
 
-Goto (I23, number) -> I21
+Goto (I25, number) -> I23
 
-Goto (I23, id) -> I22
+Goto (I25, id) -> I24
 
-Goto (I23, ‘(’) -> I23
+Goto (I25, ‘(’) -> I25
 
-Goto (I24, {) -> I35
+Goto (I26, {) -> I37
 I → if (C) { · B}
 B → · S
 B → · S B
@@ -234,19 +232,15 @@ D → · var id = E
 I → · if (C) { B }
 W → · while (C) { B }
 
-Goto (I25, id) -> I36
-C → id == id ·
-
-Goto (I26, id) -> I37
-C → id != id ·
-
 Goto (I27, id) -> I38
-C → id > id ·
 
 Goto (I28, id) -> I39
-C → id < id ·
 
-Goto (I29, {) -> I40
+Goto (I29, id) -> I40
+
+Goto (I30, id) -> I41
+
+Goto (I31, {) -> I42
 W → while (C) { · B}
 B → · S
 B → · S B
@@ -257,93 +251,93 @@ D → · var id = E
 I → · if (C) { B }
 W → · while (C) { B }
 
-Goto (I30, E) -> I41
+Goto (I32, E) -> I43
 E → T + E ·
 
-Goto (I30, T) -> I19
+Goto (I32, T) -> I21
 
-Goto (I30, F) -> I20
+Goto (I32, F) -> I22
 
-Goto (I30, number) -> I21
+Goto (I32, number) -> I23
 
-Goto (I30, id) -> I22
+Goto (I32, id) -> I24
 
-Goto (I30, ‘(’) -> I23
+Goto (I32, ‘(’) -> I25
 
-Goto (I31, E) -> I42
+Goto (I33, E) -> I44
 E → T - E ·
 
-Goto (I31, T) -> I19
+Goto (I33, T) -> I21
 
-Goto (I31, F) -> I20
+Goto (I33, F) -> I22
 
-Goto (I31, number) -> I21
+Goto (I33, number) -> I23
 
-Goto (I31, id) -> I22
+Goto (I33, id) -> I24
 
-Goto (I31, ‘(’) -> I23
+Goto (I33, ‘(’) -> I25
 
-Goto (I32, T) -> I43
+Goto (I34, T) -> I45
 T → F * T ·
 
-Goto (I32, F) -> I20
+Goto (I34, F) -> I22
 
-Goto (I32, number) -> I21
+Goto (I34, number) -> I23
 
-Goto (I32, id) -> I22
+Goto (I34, id) -> I24
 
-Goto (I32, ‘(’) -> I23
+Goto (I34, ‘(’) -> I25
 
-Goto (I33, T) -> I44
+Goto (I35, T) -> I46
 T → F / T ·
 
-Goto (I33, F) -> I20
+Goto (I35, F) -> I22
 
-Goto (I33, number) -> I21
+Goto (I35, number) -> I23
 
-Goto (I33, id) -> I22
+Goto (I35, id) -> I24
 
-Goto (I33, ‘(’) -> I23
+Goto (I35, ‘(’) -> I25
 
-Goto (I34, ‘)’) -> I45
-F → (E) ·
+Goto (I36, ‘)’) -> I47
+F → (E) ·	
 
-Goto (I35, B) -> I46
+Goto (I37, B) -> I48
 I → if (C) {B · }
 
-Goto (I35, S) -> I3
+Goto (I37, S) -> I3
 
-Goto (I35, D) -> I4
+Goto (I37, D) -> I4
 
-Goto (I35, I) -> I5
+Goto (I37, I) -> I5
 
-Goto (I35, W) -> I6
+Goto (I37, W) -> I6
 
-Goto (I35, var) -> I7
+Goto (I37, var) -> I7
 
-Goto (I35, if) -> I8
+Goto (I37, if) -> I8
 
-Goto (I35, while) -> I9
+Goto (I37, while) -> I9
 
-Goto (I40, B) -> I47
+Goto (I42, B) -> I49
 W → while (C) {B · }
 
-Goto (I40, S) -> I3
+Goto (I42, S) -> I3
 
-Goto (I40, D) -> I4
+Goto (I42, D) -> I4
 
-Goto (I40, I) -> I5
+Goto (I42, I) -> I5
 
-Goto (I40, W) -> I6
+Goto (I42, W) -> I6
 
-Goto (I40, var) -> I7
+Goto (I42, var) -> I7
 
-Goto (I40, if) -> I8
+Goto (I42, if) -> I8
 
-Goto (I40, while) -> I9
+Goto (I42, while) -> I9
 
-Goto (I46, }) -> I48
+Goto (I48, }) -> I50
 I → if (C) {B} ·
 
-Goto (I47, }) -> I49
+Goto (I49, }) -> I51
 W → while (C) {B} ·

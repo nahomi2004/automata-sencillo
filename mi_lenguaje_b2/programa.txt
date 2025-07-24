@@ -1,8 +1,9 @@
-var edad = 20
-if (edad > 18) {
-    var estado = 1
-}
-var edad = 0
-while (edad > 18) {
-    var estado2 = 2
-}
+var edad = 20;
+var mayoria = 18;
+if (edad > mayoria) {
+var estado = 1;
+};
+var edad = 0;
+while (edad > mayoria) {
+var estado2 = 2;
+};
